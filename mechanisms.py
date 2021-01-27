@@ -89,13 +89,14 @@ def entrada_em_propriedade(game: Partida):
 
 def oportunidade_compra(imovel: Propriedade, player: Jogador):
     funs_decisao = {
-        'impulsivo': lambda: imovel.custo_venda <= player.saldo,
+        'impulsivo': lambda: True,
         'exigente': lambda: imovel.aluguel > 50,
         'cauteloso': lambda: player.saldo - imovel.custo_venda > 80,
         'aleatorio': lambda: random.randint(0, 1) == 1
     }
 
-    if funs_decisao[player.perfil.name]() == True:
+    if imovel.custo_venda <= player.saldo \
+            and funs_decisao[player.perfil.name]() == True:
         imovel.proprietario = player
         player.saldo -= imovel.custo_venda
 
